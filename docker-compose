@@ -1,0 +1,81 @@
+version: "3"
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - ./data:/data
+    environment:
+      FLASK_APP: app.py
+      FLASK_ENV: development
+      SQLALCHEMY_DATABASE_URI: sqlite:///data/db.sqlite
+
+  db:
+    image: nouchka/sqlite3
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./data:/root/db
+      
+ #  In this example, the ./data directory on your host machine is mounted as a volume in both the web and db services. 
+ The SQLALCHEMY_DATABASE_URI environment variable is set to sqlite:///data/db.sqlite, 
+ which means that the SQLite database file will be located at /data/db.sqlite inside the container.
+############################################################################################################## 
+ FROM python:3.9-slim-buster
+
+WORKDIR /app
+
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
+
+COPY . .
+
+ENV FLASK_APP=app.py
+
+CMD ["flask", "run", "--host=0.0.0.0"]
+###############################################################################
+from flask import Flask, request, redirect, url_for, session
+
+app = Flask(__name__)
+app.secret_key = "super secret key"
+
+@app.route("/")
+def home():
+    if "username" in session:
+        return f"Hello, {session['username']}!"
+    else:
+        return redirect(url_for("login"))
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        session["username"] = request.form["username"]
+        return redirect(url_for("home"))
+    else:
+        return """
+            <form method="post">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username">
+                <input type="submit" value="Log In">
+            </form>
+        """
+
+if __name__ == "__main__":
+    app.run()
+    
+    This code defines two routes: / and /login. The / route checks if the user is logged in by checking if the username key is in the session. 
+    If the user is logged in, it displays a welcome message. If not, it redirects to the /login route.
+    The /login route displays a simple HTML form that asks for the user’s username. When the form is submitted, 
+    the username is stored in the session and the user is redirected back to the / route.
+######################################################
+<form method="post">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username">
+    <input type="submit" value="Log In">
+</form>
+#####################################
+Flask==2.1.0
+SQLAlchemy==1.4.23
+
