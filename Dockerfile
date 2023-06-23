@@ -19,12 +19,15 @@ EXPOSE 5100
 
 # Set the entrypoint command to run the Flask app
 CMD python, web.py
+//Docker volume
+-----------------------------------------------------
+docker volume create mydata  
 -----------------------------------------------------
 //build the image 
 docker build -t myweb .
 -----------------------------------------------------
 //run the image
-docker run -d -p 5100:5100  myweb
+docker run -d -p 5100:5100 -v mydata:/web/  myweb 
 ---------------------------------------------------------
 //to start a shell inside a running container, you can use the following command:
 docker exec -it 7df29e43b8fd /bin/bash
@@ -48,6 +51,10 @@ web/
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </head>
+
+---------------------------------------------
+The location of the Docker volume "mydata" on the host machine depends on the operating system and Docker configuration. By default, Docker volumes are stored in the Docker data directory.
+Linux: /var/lib/docker/volumes/
 
 
 
