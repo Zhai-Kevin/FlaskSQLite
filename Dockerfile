@@ -12,7 +12,7 @@ COPY . /web
 WORKDIR /web
 
 # Copy the templates directory
-COPY templates /app/templates
+COPY templates /web/templates
 
 # Expose the necessary port
 EXPOSE 5001
