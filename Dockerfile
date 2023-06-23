@@ -1,7 +1,7 @@
 //Dockerfile
 ----------------------------------------------
 # Use the official Python base image
-FROM python:
+FROM python:3
 
 # Copy the requirements file and install dependencies
 COPY requirements.txt /app/requirements.txt
@@ -15,16 +15,16 @@ WORKDIR /web
 COPY templates /web/templates
 
 # Expose the necessary port
-EXPOSE 5001
+EXPOSE 5100
 
 # Set the entrypoint command to run the Flask app
-CMD ["python", "web.py"]
+CMD python, web.py
 -----------------------------------------------------
 //build the image 
 docker build -t myweb .
 -----------------------------------------------------
 //run the image
-docker run -d -p 5001:5001  myweb
+docker run -d -p 5100:5100  myweb
 ---------------------------------------------------------
 //to start a shell inside a running container, you can use the following command:
 docker exec -it 7df29e43b8fd /bin/bash
