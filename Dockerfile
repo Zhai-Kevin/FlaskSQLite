@@ -27,7 +27,7 @@ docker volume create mydata
 docker build -t myweb .
 -----------------------------------------------------
 //run the image
-docker run -d -p 5100:5100 -v mydata:/web/  myweb 
+docker run -d -p 5100:5100 -v mydata:/web/data  myweb 
 ---------------------------------------------------------
 //to start a shell inside a running container, you can use the following command:
 docker exec -it 7df29e43b8fd /bin/bash
