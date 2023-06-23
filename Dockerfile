@@ -8,23 +8,23 @@ COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
 # Copy the code into the Docker image
-COPY . /app
-WORKDIR /app
+COPY . /web
+WORKDIR /web
 
 # Copy the templates directory
 COPY templates /app/templates
 
 # Expose the necessary port
-EXPOSE 5000
+EXPOSE 5001
 
 # Set the entrypoint command to run the Flask app
-CMD ["python", "app.py"]
+CMD ["python", "web.py"]
 -----------------------------------------------------
 //build the image 
-docker build -t myapp .
+docker build -t myweb .
 -----------------------------------------------------
 //run the image
-docker run -d -p 5000:5000  myapp
+docker run -d -p 5001:5001  myweb
 ---------------------------------------------------------
 //to start a shell inside a running container, you can use the following command:
 docker exec -it 7df29e43b8fd /bin/bash
@@ -32,10 +32,10 @@ docker exec -it 7df29e43b8fd /bin/bash
 exit
 -------------------------------------------------------------
 //On your host machine (i.e., outside the Docker container)
-app/
+web/
 ├── Dockerfile
 ├── requirements.txt
-├── app.py
+├── web.py
 ├── templates/
 │   └── index.html
 │── static/
