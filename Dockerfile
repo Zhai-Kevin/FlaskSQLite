@@ -19,7 +19,7 @@ EXPOSE 5100
 
 # Set the entrypoint command to run the Flask app
 CMD python, web.py
-//Docker volume
+//Docker volume   Linux: /var/lib/docker/volumes/
 -----------------------------------------------------
 docker volume create mydata  
 -----------------------------------------------------
