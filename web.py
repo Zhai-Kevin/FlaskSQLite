@@ -8,7 +8,7 @@ app = Flask(__name__)
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
-        db = g._database = sqlite3.connect('example.db')
+        db = g._database = sqlite3.connect('/web/data/example.db')
     return db
 
 # Create a SQLite database and table
