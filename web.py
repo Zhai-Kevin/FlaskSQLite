@@ -44,7 +44,16 @@ def add_user():
     db.commit()
 
     return redirect(url_for('index'))
-
+    
+# Route to delete a user
+@app.route('/delete/<int:user_id>', methods=['POST'])
+def delete_user(user_id):
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("DELETE FROM users WHERE rowid=?", (user_id,))
+    db.commit()
+    return redirect(url_for('index'))
+    
 if __name__ == '__main__':
     init_db()
     app.run(debug=True, host='0.0.0.0', port=5100)
